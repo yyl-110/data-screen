@@ -1,9 +1,5 @@
 # 数据可视化 - 大屏项目
 
-> 项目主要参考自[实战「慕课外卖」数据大屏](http://www.youbaobao.xyz/datav-docs/)，更多内容请移步 👉 [数据可视化之入门指南](https://www.yuque.com/sherwin-sw/fe/data-visualization)。
-
-![data-visualization-report.png](./docs/data-visualization-screen.png)
-
 ## 1.1 技术栈
 
 - Vue3 + TS
@@ -25,7 +21,3 @@
 ### 1.2.3 自动轮播组件
 
 [auto-scroll 组件](./src/components/auto-scroll.vue)，在设定表头和内容后能够自动向上滚动轮播内容（也可借助 Swiper 库来实现）。
-
----
-
-如果发现本项目有错误，欢迎提交 issues 指正，也可联系邮箱 [sherwin_sw@163.com](mailto:sherwin_sw@163.com)。
