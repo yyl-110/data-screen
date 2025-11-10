@@ -72,6 +72,8 @@ const initTable = () => {
     headerBGC: "#043C64",
     oddRowBGC: "#051841",
     evenRowBGC: 'transparent',
+    waitTime: 100000000000000,
+    rowNum: 7
   }
 }
 const initChart = () => {
@@ -199,7 +201,7 @@ watch(() => props.chartData, () => {
   .scrollBoard {
     width: 55%;
     height: 100%;
-    padding-top: 43px;
+    padding-top: 23px;
     padding-bottom: 16px;
   }
 

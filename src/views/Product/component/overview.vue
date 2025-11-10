@@ -16,6 +16,7 @@ const props = defineProps({
 
 const chartOption = ref({});
 const initChart = () => {
+  console.log("props.data", props.data.map((item) => item.nodeName));
   let chartData = {
     color: "0,205,151",
     yAxisData: props.data.map((item) => item.nodeName),
@@ -75,6 +76,7 @@ const initChart = () => {
             color: "#fff",
           },
         },
+        inverse: true,
         data: chartData.yAxisData,
       },
     ],

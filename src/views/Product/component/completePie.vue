@@ -55,7 +55,7 @@ const initChart = () => {
 
   const option = {
     tooltip: {
-      show: false,
+      show: true,
       trigger: "item",
     },
     title: {

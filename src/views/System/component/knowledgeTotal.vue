@@ -59,7 +59,7 @@ const initChart = () => {
           .split(",")
           .map((val, inx) => ({ value: val, name: legendData[inx] }))
       : [],
-    color: ["#15EFE6", "#F7B500", "#168EF0"],
+    // color: ["#15EFE6", "#F7B500", "#168EF0"],
     label: {
       show: true,
       position: "inside",

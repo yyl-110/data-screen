@@ -30,12 +30,12 @@ const initChart = () => {
         textStyle: {
           rich: {
             a: {
-              fontSize: 20,
+              fontSize: 18,
               padding: [5, 0, 0, 0],
               color: "#BACDF5",
             },
             b: {
-              fontSize: 26,
+              fontSize: 22,
               color: "#FFFFFF",
             },
           },
