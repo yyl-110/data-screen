@@ -1,6 +1,6 @@
 <template>
   <div style="width: 100%;height: 100%;padding: 30px 0">
-    <seamless-scroll :speed="800" direction="up" style="height: 100%;">
+    <seamless-scroll :speed="400" direction="up" style="height: 100%;">
       <div class="list">
         <div class="item" v-for="(item, index) in userList" :key="index">
           <div style="flex-shrink: 0;" class="wrap">

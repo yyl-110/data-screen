@@ -1,5 +1,11 @@
 <template>
   <div class="homeContainer">
+    <!-- 添加视频背景 -->
+    <video autoplay muted loop playsinline preload="auto" class="video-bg">
+      <source src="@/assets/bgvideo.mp4" type="video/mp4" />
+      <!-- 可以添加更多格式支持 -->
+      <!-- <source src="@/assets/home/background-video.webm" type="video/webm"> -->
+    </video>
     <screen-container :width="1920" :height="1080">
       <div class="container">
         <header class="header">
@@ -45,9 +51,20 @@ const goTo = (item: any) => {
 .homeContainer {
   width: 100%;
   height: 100%;
-  background-image: url("../../assets/home/bg.png");
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
+  // background-image: url("../../assets/home/bg.png");
+  // background-repeat: no-repeat;
+  // background-size: 100% 100%;
+  position: relative;
+  .video-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1; /* 确保视频在其他内容后面 */
+  }
+
   @keyframes float {
     0% {
       transform: translateY(0);
@@ -84,7 +101,7 @@ const goTo = (item: any) => {
         left: 100px;
       }
 
-      >div {
+      > div {
         width: 50%;
         text-align: center;
         animation: float 2s ease-in-out infinite;

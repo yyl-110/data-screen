@@ -19,10 +19,12 @@ const props = defineProps({
 });
 
 const initChart = () => {
-  const dataList = props.chartData.map((item) => ({
-    name: item.groupName,
-    value: item["count(*)"],
-  }));
+  const dataList = props.chartData
+    .map((item) => ({
+      name: item.groupName,
+      value: item["count(*)"],
+    }))
+    .sort((a, b) => b.value - a.value); // value 降序排序
 
   let dataBg = dataList.map((item) => ({
     value: 1,
@@ -77,7 +79,7 @@ const initChart = () => {
                 },
                 height: 33,
                 width: 30,
-               padding: [4, 0, 0, 0],
+                padding: [4, 0, 0, 0],
               },
             },
           },

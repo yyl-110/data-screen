@@ -1,5 +1,5 @@
 <template>
-  <div class="systemContainer">
+  <div class="baseContainer">
     <screen-container :width="1920" :height="1080">
       <div class="container">
         <header class="header">
@@ -11,42 +11,50 @@
         <main>
           <el-row style="height: 100%; padding: 30px 24px 42px" :gutter="24">
             <el-col :span="8" style="height: 50%">
-              <div class="knowledge">
-                <Title text="知识看板" />
+              <div class="userRank">
+                <Title text="活跃用户榜单" />
                 <div class="wrap">
-                  <knowledge-bar :chartData="systemInfo?.knowledgeList" />
+                  <user-rank :userList="baseInfo?.activeUsersList" />
                 </div>
               </div>
             </el-col>
             <el-col :span="8" style="height: 50%">
-              <div class="knowledgeTotal">
-                <Title text="知识汇总" />
+              <div class="systemAvailable">
+                <Title text="系统可用率" />
                 <div class="wrap">
-                  <knowledge-total :chartData="systemInfo?.knowledgePieChart" />
+                  <system-available :chartData="baseInfo?.systemAvailable" />
                 </div>
               </div>
             </el-col>
             <el-col :span="8" style="height: 50%">
-              <div class="knowledgeRank">
-                <Title text="知识访问次数排名 TOP10" />
+              <div class="totalVisitBoard">
+                <Title text="总体访问看板" />
                 <div class="wrap">
-                  <knowledge-rank :chartData="systemInfo?.applicationRanking" />
+                  <total-visit-board :chartData="baseInfo?.loginNumList" />
                 </div>
               </div>
             </el-col>
             <el-col :span="8" style="height: 50%">
-              <div class="resourceTotal">
-                <Title text="资源汇总" />
+              <div class="systemUser">
+                <Title text="系统用户统计" />
                 <div class="wrap">
-                  <resource-bar :chartData="systemInfo?.resourceSummaryList" />
+                  <system-user />
                 </div>
               </div>
             </el-col>
-            <el-col :span="16" style="height: 50%">
-              <div class="knowledgeBoard">
-                <Title text="知识访问看板" showSelect showTime :timeOptions="timeOptions" @changeTime="changeTime" />
+            <el-col :span="8" style="height: 50%">
+              <div class="memoryBoard">
+                <Title text="内存占用情况" />
                 <div class="wrap">
-                  <knowledge-board :chartData="visitReportInfo" :timeType="timeType" />
+                  <memory-board :systemMemory="baseInfo?.systemMemory" />
+                </div>
+              </div>
+            </el-col>
+            <el-col :span="8" style="height: 50%">
+              <div class="visitBoard">
+                <Title text="各专业访问看板" />
+                <div class="wrap">
+                  <visit-board :chartData="baseInfo?.userGroupList" />
                 </div>
               </div>
             </el-col>
@@ -61,70 +69,39 @@
 import ScreenContainer from "@/components/screen-container.vue";
 import timeClock from "@/components/time-clock.vue";
 import Title from "@/components/title.vue";
-import knowledgeRank from "./component/knowledgeRank.vue";
-import resourceBar from "./component/resourceBar.vue";
-import knowledgeBoard from "./component/knowledgeBoard.vue";
-import knowledgeBar from "./component/knowledgeBar.vue";
-import knowledgeTotal from "./component/knowledgeTotal.vue";
-import { getModelVisitReport, getReportKnowledgeList } from "@/api";
+import visitBoard from "./component/visitBoard.vue";
+import memoryBoard from "./component/memoryBoard.vue";
+import totalVisitBoard from "./component/totalVisitBoard.vue";
+import systemUser from "./component/systemUser.vue";
+import userRank from "./component/userRank.vue";
+import systemAvailable from "./component/systemAvailable.vue";
+import { getReportSystemList } from "@/api";
 
-const timeOptions = [
-  {
-    value: '1',
-    label: "近半年",
-  },
-  {
-    value: '2',
-    label: "近一年",
-  },
-];
-
-const systemInfo = ref({});
-const visitReportInfo = ref([])
-const timeType = ref('1')
+const baseInfo = ref({});
 
 const fetchData = async () => {
   try {
-    const res = await getReportKnowledgeList({})
-    if (res.code === '0') {
-      systemInfo.value = res.data
+    const res = await getReportSystemList({});
+    if (res.code === "0") {
+      console.log(res, 999);
+      baseInfo.value = res.data;
     }
   } catch (error) {
-    console.log('error:', error)
+    console.log("error:", error);
   }
-}
-
-const fetchModelVisitReport = async (type) => {
-  try {
-    // 1：一周。2：一个月。3：一年
-    const res = await getModelVisitReport({ type })
-    if (res.code === '0') {
-      console.log('res:', res.data)
-      visitReportInfo.value = res.data
-    }
-  } catch (error) {
-    console.log('error:', error)
-  }
-}
+};
 
 const back = () => {
   window.history.back();
 };
 
-const changeTime = (val) => {
-  timeType.value = val
-  fetchModelVisitReport(val)
-}
-
 onMounted(() => {
-  fetchData()
-  fetchModelVisitReport(1) // 默认查询一周
-})
-
+  fetchData();
+});
 </script>
 
 <style lang="scss" scoped>
-.systemContainer {
+.baseContainer {
   width: 100%;
   height: 100%;
   background-image: url("../../assets/common/commonBg.png");
@@ -147,9 +124,8 @@ onMounted(() => {
       background-repeat: no-repeat;
       background-size: 100% 100%;
       position: relative;
-
       .back {
-        width: 40px;
+        width: 35px;
         position: absolute;
         left: 80px;
         top: 50%;
@@ -167,13 +143,31 @@ onMounted(() => {
       flex: 1;
       height: 0;
 
-      .knowledgeBoard {
+      .systemUser {
         width: 100%;
-        height: calc(100% - 24px);
         display: flex;
         flex-direction: column;
-        margin-top: 24px;
-        background: rgba(0, 0, 0, 0.3);
+        background: rgba(2, 2, 2, 0.4);
+        height: calc(100% - 20px);
+        margin-top: 20px;
+
+        .wrap {
+          width: 100%;
+          flex: 1;
+          height: 0;
+          display: flex;
+          justify-content: center;
+          padding-left: 20px;
+        }
+      }
+
+      .memoryBoard {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        background: rgba(2, 2, 2, 0.4);
+        height: calc(100% - 20px);
+        margin-top: 20px;
 
         .wrap {
           width: 100%;
@@ -184,30 +178,12 @@ onMounted(() => {
         }
       }
 
-      .resourceTotal {
-        width: 100%;
-        height: calc(100% - 24px);
-        display: flex;
-        flex-direction: column;
-        background: rgba(0, 0, 0, 0.3);
-        margin-top: 24px;
-
-        .wrap {
-          width: 100%;
-          flex: 1;
-          height: 0;
-          display: flex;
-          justify-content: center;
-          padding: 0 10px;
-        }
-      }
-
-      .knowledgeRank {
+      .totalVisitBoard {
         width: 100%;
         height: 100%;
         display: flex;
         flex-direction: column;
-        background: rgba(0, 0, 0, 0.3);
+        background: rgba(2, 2, 2, 0.4);
 
         .wrap {
           width: 100%;
@@ -215,16 +191,33 @@ onMounted(() => {
           height: 0;
           display: flex;
           justify-content: center;
-          padding: 0 10px;
+          padding: 12px 16px;
         }
       }
 
-      .knowledge {
+      .userRank {
         width: 100%;
         height: 100%;
         display: flex;
         flex-direction: column;
-        background: rgba(0, 0, 0, 0.3);
+        background: rgba(2, 2, 2, 0.4);
+
+        .wrap {
+          width: 100%;
+          flex: 1;
+          height: 0;
+          display: flex;
+          justify-content: center;
+          // padding: 12px 16px;
+        }
+      }
+
+      .systemAvailable {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        background: rgba(2, 2, 2, 0.4);
 
         .wrap {
           width: 100%;
@@ -235,12 +228,13 @@ onMounted(() => {
         }
       }
 
-      .knowledgeTotal {
+      .visitBoard {
         width: 100%;
-        height: 100%;
         display: flex;
         flex-direction: column;
-        background: rgba(0, 0, 0, 0.3);
+        background: rgba(2, 2, 2, 0.4);
+        height: calc(100% - 20px);
+        margin-top: 20px;
 
         .wrap {
           width: 100%;
@@ -248,6 +242,7 @@ onMounted(() => {
           height: 0;
           display: flex;
           justify-content: center;
+          padding: 24px 12px;
         }
       }
     }

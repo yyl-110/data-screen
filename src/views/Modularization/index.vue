@@ -123,7 +123,7 @@ onMounted(() => {
       position: relative;
 
       .back {
-        width: 40px;
+        width: 35px;
         position: absolute;
         left: 80px;
         top: 50%;
