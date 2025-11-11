@@ -23,7 +23,7 @@ export default defineConfig({
     // 允许通过 IP 访问
     host: "0.0.0.0",
     // 可选：自定义端口号，默认是 5173
-    port: 8080,
+    port: 8299,
     open: true,
     // proxy: {
     //   "/api": {

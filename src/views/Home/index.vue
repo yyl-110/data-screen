@@ -1,5 +1,6 @@
 <template>
   <div class="homeContainer">
+    <div class="video-fallback"></div>
     <!-- 添加视频背景 -->
     <video autoplay muted loop playsinline preload="auto" class="video-bg">
       <source src="@/assets/bgvideo.mp4" type="video/mp4" />
@@ -23,7 +24,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import ScreenContainer from "@/components/screen-container.vue";
 import btn1 from "@/assets/home/btn1.png";
 import btn3 from "@/assets/home/btn3.png";
@@ -40,7 +41,7 @@ const list = [
   { url: btn4, id: 4, path: "/base" },
 ];
 
-const goTo = (item: any) => {
+const goTo = (item) => {
   router.push({
     path: item.path,
   });
@@ -55,6 +56,19 @@ const goTo = (item: any) => {
   // background-repeat: no-repeat;
   // background-size: 100% 100%;
   position: relative;
+
+  .video-fallback {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("../../assets/home/bg.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    z-index: 99;
+  }
+
   .video-bg {
     position: absolute;
     top: 0;
@@ -62,7 +76,8 @@ const goTo = (item: any) => {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    z-index: -1; /* 确保视频在其他内容后面 */
+    z-index: 100;
+    /* 确保视频在其他内容后面 */
   }
 
   @keyframes float {
@@ -93,15 +108,15 @@ const goTo = (item: any) => {
       justify-content: center;
       align-items: center;
       position: relative;
+
       .logo {
         position: absolute;
-        width: 88px;
-        height: 33px;
+        width: 240px;
         top: -15px;
         left: 100px;
       }
 
-      > div {
+      >div {
         width: 50%;
         text-align: center;
         animation: float 2s ease-in-out infinite;

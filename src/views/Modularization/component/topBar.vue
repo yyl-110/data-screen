@@ -22,7 +22,12 @@ const props = defineProps({
 const initChart = () => {
   let dataList = props.chartData.map(item => ({ name: item.categoryName, value: item.nums }))
 
-  const endPercent = 10 / dataList.length * 100
+  const rowsToShow = 10;  // 每屏展示 10 条数据
+  const totalRows = dataList.length;
+
+  // 根据数据量和每次展示的行数，计算dataZoom的显示范围
+  const endPercent = (rowsToShow / totalRows) * 100;  // 计算结束百分比
+
 
   chartOption.value = {
     grid: {
@@ -46,16 +51,21 @@ const initChart = () => {
     dataZoom: [{
       type: "slider",
       show: true,
-      yAxisIndex: [0,1],
+      yAxisIndex: [0, 1],
       width: 6, //组件宽度
       backgroundColor: "transparent", //两边未选中的滑动条区域的颜色
       borderRadius: 100,
       borderColor: "transparent", //滚动条边框颜色
-      fillerColor: "#0E3855", //选中的滑动条区域的颜色
+      fillerColor: "transparent", //选中的滑动条区域的颜色
       left: "96%", //滚动条位置
       start: 0, //数据窗口范围的起始百分比
       end: endPercent,
       realtime: true, //是否实时更新
+      zoomLock: true,
+      filterMode: 'empty',
+      handleSize: '0px',
+      showDetail: false,
+      showDataShadow: false,
     },],
     xAxis: [
       {

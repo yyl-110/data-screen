@@ -19,7 +19,7 @@ const chartOption = ref({});
 
 const initChart = () => {
   const legendData = props.chartData.pieChartTitle;
-  const nameList = ["计算程序", "模板文件", "设计指南", "故障案例"];
+  const nameList = ["加改方案", "模板文件", "设计指南", "故障案例"];
   const dataList = [
     props.chartData?.pieChartValue1,
     props.chartData?.pieChartValue2,

@@ -24,7 +24,7 @@ const initChart = () => {
     value: item.number,
   }));
 
-  const endPercent = 10 / dataList.length * 100
+  const endPercent = dataList.length > 10 ? 10 / dataList.length * 100 : 100
 
   chartOption.value = {
     grid: {
@@ -47,7 +47,7 @@ const initChart = () => {
     },
     dataZoom: [{
       type: "slider",
-      show: true,
+      show: dataList.length > 10 ? true : false,
       yAxisIndex: [0, 1],
       width: 6, //组件宽度
       backgroundColor: "transparent", //两边未选中的滑动条区域的颜色
@@ -58,6 +58,11 @@ const initChart = () => {
       start: 0, //数据窗口范围的起始百分比
       end: endPercent,
       realtime: true, //是否实时更新
+      zoomLock: true,
+      filterMode: 'empty',
+      handleSize: '0px',
+      showDetail: false,
+      showDataShadow: false,
     },],
     xAxis: [
       {

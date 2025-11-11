@@ -67,7 +67,7 @@ const initTable = () => {
   config.value = {
     header: ['', ...getMonthList.value.map(item => dayjs(item).format('M月'))],
     data,
-    columnWidth: [80],
+    columnWidth: [95],
     align: ['center'],
     headerBGC: "#043C64",
     oddRowBGC: "#051841",
@@ -199,14 +199,14 @@ watch(() => props.chartData, () => {
   height: 100%;
 
   .scrollBoard {
-    width: 55%;
+    width: 60%;
     height: 100%;
     padding-top: 23px;
     padding-bottom: 16px;
   }
 
   .lineWrap {
-    width: 45%;
+    width: 40%;
     height: 100%;
 
   }
