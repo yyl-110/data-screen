@@ -3,7 +3,12 @@
     <screen-container :width="1920" :height="1080">
       <div class="container">
         <header class="header">
-          <img src="../../assets/common/back.png" alt="" class="back" @click="back" />
+          <img
+            src="../../assets/common/back.png"
+            alt=""
+            class="back"
+            @click="back"
+          />
           <img src="../../assets/product/title.png" alt="" class="title" />
           <!-- 时间 -->
           <time-clock />
@@ -12,12 +17,23 @@
           <el-row style="height: 100%; padding: 30px" :gutter="18">
             <el-col :span="12">
               <div class="overview">
-                <Title text="项目概览" showSelect :optionsProject="projectList" />
+                <Title
+                  text="项目概览"
+                  showSelect
+                  :optionsProject="projectList"
+                />
                 <div class="list">
                   <div class="item" v-for="(item, index) in list" :key="index">
                     <div>
-                      <count-to :startVal="0" :endVal="item.num" :duration="1000" :autoplay="true" :separator="','"
-                        class="count-style" :style="{ color: item.color }" />
+                      <count-to
+                        :startVal="0"
+                        :endVal="item.num"
+                        :duration="1000"
+                        :autoplay="true"
+                        :separator="','"
+                        class="count-style"
+                        :style="{ color: item.color }"
+                      />
                     </div>
                     <span>{{ item.title }}</span>
                   </div>
@@ -27,7 +43,13 @@
                 </div>
               </div>
               <div class="task">
-                <Title text="项目任务" showSelect showPhase :phaseId="taskPhaseId" @changePhase="changeTaskPhase" />
+                <Title
+                  text="项目任务"
+                  showSelect
+                  showPhase
+                  :phaseId="taskPhaseId"
+                  @changePhase="changeTaskPhase"
+                />
                 <div class="taskPie">
                   <complete-pie :chartData="productInfo?.taskNumsList" />
                   <product-line :chartData="productInfo?.project5List" />
@@ -36,8 +58,13 @@
             </el-col>
             <el-col :span="12">
               <div class="board">
-                <Title text="项目交付看板" showSelect showPhase :phaseId="interactionPhaseId"
-                  @changePhase="changeInteractionPhase" />
+                <Title
+                  text="项目交付看板"
+                  showSelect
+                  showPhase
+                  :phaseId="interactionPhaseId"
+                  @changePhase="changeInteractionPhase"
+                />
                 <div class="wrap">
                   <interaction :chartData="deliveryInfo" />
                 </div>
@@ -46,7 +73,11 @@
                 <Title text="二维图纸进展" />
                 <div class="pieWrap">
                   <div class="row1">
-                    <div class="pieItem" v-for="(item, index) in pdmPicReportList.slice(0, 3)" :key="index">
+                    <div
+                      class="pieItem"
+                      v-for="(item, index) in pdmPicReportList.slice(0, 3)"
+                      :key="index"
+                    >
                       <div class="pie">
                         <pie :data="item.value" />
                       </div>
@@ -54,14 +85,20 @@
                     </div>
                   </div>
                   <div class="row2">
-                    <div class="pieItem" v-for="(item, index) in pdmPicReportList.slice(3)" :key="index">
+                    <div
+                      class="pieItem"
+                      v-for="(item, index) in pdmPicReportList.slice(3)"
+                      :key="index"
+                    >
                       <div class="pie">
                         <pie :data="item.value" />
                       </div>
                       <span>{{ item.title }}</span>
                     </div>
                   </div>
-                  <div class="hint">图纸签审进度%=完成签审图纸数量/已出图纸数量</div>
+                  <div class="hint">
+                    图纸签审进度%=完成签审图纸数量/已出图纸数量
+                  </div>
                 </div>
               </div>
             </el-col>
@@ -93,7 +130,7 @@ const pdmPicReportList = ref([]);
 const deliveryInfo = ref({});
 
 const interactionPhaseId = ref(null); // 项目交付看板阶段id
-const taskPhaseId = ref(null); // 项目任务阶段id
+const taskPhaseId = ref("-1"); // 项目任务阶段id
 
 const list = ref([]);
 
@@ -131,9 +168,10 @@ const fetchPdmPicReport = async () => {
 // 产品设计看板
 const fetchData = async (val) => {
   try {
+    const phaseIdData = val ? val : selectPhaseId.value;
     const res = await getReportProjectList({
       projectId: selectProjectId.value,
-      phaseId: val ? val : selectPhaseId.value,
+      phaseId: phaseIdData === "-1" ? "" : phaseIdData,
     });
     if (res.code === "0") {
       productInfo.value = res.data;
@@ -168,7 +206,11 @@ const fetchData = async (val) => {
 // 项目交付看板
 const fetchDeliveryData = async () => {
   try {
-    const res = await deliveryReport({ phaseId: interactionPhaseId.value });
+    const res = await deliveryReport({
+      phaseId:
+        interactionPhaseId.value === "-1" ? "" : interactionPhaseId.value,
+      projectId: selectProjectId.value,
+    });
     if (res.code === "0") {
       deliveryInfo.value = res.data;
     }
@@ -181,6 +223,8 @@ watch(
   () => selectProjectId.value,
   () => {
     if (selectProjectId.value) {
+      interactionPhaseId.value = "-1";
+      taskPhaseId.value = "-1";
       fetchData();
       fetchPdmPicReport();
     }

@@ -8,12 +8,12 @@ interface IProjectItem {
 }
 
 interface IItem {
-  value: number;
+  value: number | string;
   label: string;
 }
 
 interface IPhaseItem {
-  phaseId: number;
+  phaseId: number | string;
   phaseName: string;
 }
 
@@ -37,12 +37,22 @@ export const useIndexStore = defineStore("index", {
     },
     updatePhaseList(list: IPhaseItem[]) {
       if (list && list.length > 0) {
-        this.phaseList = list.map((item) => ({
+        const _list = list.map((item) => ({
           value: item.phaseId,
           label: item.phaseName,
         }));
+        _list.unshift({
+          value: "-1",
+          label: "全部",
+        });
+        this.phaseList = _list;
       } else {
-        this.phaseList = [];
+        this.phaseList = [
+          {
+            value: "-1",
+            label: "全部",
+          },
+        ];
       }
     },
     updateProjectList(list: IProjectItem[]) {

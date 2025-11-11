@@ -25,7 +25,7 @@ const fetchProjectList = async () => {
       updateSelectProjectId(res.data[0]?.projectId);
       if (res.data[0]?.phaseList && res.data[0]?.phaseList.length) {
         updatePhaseList(res.data[0]?.phaseList);
-        updateSelectPhaseId(res.data[0]?.phaseList[0]?.phaseId);
+        updateSelectPhaseId("-1");
       }
     }
   } catch (error) {
