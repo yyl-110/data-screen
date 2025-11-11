@@ -19,7 +19,7 @@ const initChart = () => {
   let max = props.data.totalCount;
   let value = props.data.archivedCount;
 
-  let rate = max ? Math.round((value * 100) / max) : 0;
+  const rate = max ? ((value * 100) / max).toFixed(1) : 0;
   chartOption.value = {
     title: [
       {

@@ -7,6 +7,33 @@
 <script setup>
 import * as echarts from "echarts";
 
+const defaultList = [
+  {
+    taskNums: 0,
+    taskState: 2,
+    taskStateName: "已完成",
+    color: '#43CF7C'
+  },
+  {
+    taskNums: 0,
+    taskState: 1,
+    taskStateName: "进行中",
+    color: '#FFEB3B',
+  },
+  {
+    taskNums: 0,
+    taskState: 3,
+    taskStateName: "变更中",
+    color: '#D43030'
+  },
+  {
+    taskNums: 0,
+    taskState: 0,
+    taskStateName: "未开始",
+    color: '#66B2C8'
+  },
+]
+
 const props = defineProps({
   chartData: {
     type: Array,
@@ -22,31 +49,30 @@ const initChart = () => {
   if (timer.value) {
     clearInterval(timer.value);
   }
-  const dataList = props.chartData.map((item) => ({
-    name: item.taskStateName,
-    value: item.taskNums,
-  }));
+  const dataList = defaultList.map((item) => {
+    const valueObj = props.chartData.find(v => v.taskState === item.taskState)
+    if (valueObj) {
+      return {
+        name: item.taskStateName,
+        value: valueObj.taskNums,
+        color: item.color
+      }
+    }
+    return {
+      name: item.taskStateName,
+      value: 0,
+      color: item.color
+    }
+  });
   let angle = 0;
-  const colors = [
-    {
-      lightColor: "#43CF7C",
-    },
-    {
-      lightColor: "#FFEB3B",
-    },
-    {
-      lightColor: "#D43030",
-    },
-    {
-      lightColor: "#66B2C8",
-    },
-  ];
+
   const data1 = dataList.map((v, i) => {
     return {
       ...v,
-      itemStyle: { color: colors[i].lightColor },
+      itemStyle: { color: v.color },
     };
   });
+  console.log('data1:', data1)
 
   let sum = 0;
   dataList.forEach((v) => {
