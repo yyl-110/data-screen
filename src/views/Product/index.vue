@@ -3,12 +3,7 @@
     <screen-container :width="1920" :height="1080">
       <div class="container">
         <header class="header">
-          <img
-            src="../../assets/common/back.png"
-            alt=""
-            class="back"
-            @click="back"
-          />
+          <img src="../../assets/common/back.png" alt="" class="back" @click="back" />
           <img src="../../assets/product/title.png" alt="" class="title" />
           <!-- 时间 -->
           <time-clock />
@@ -17,23 +12,12 @@
           <el-row style="height: 100%; padding: 30px" :gutter="18">
             <el-col :span="12">
               <div class="overview">
-                <Title
-                  text="项目概览"
-                  showSelect
-                  :optionsProject="projectList"
-                />
+                <Title text="项目概览" showSelect :optionsProject="projectList" />
                 <div class="list">
                   <div class="item" v-for="(item, index) in list" :key="index">
                     <div>
-                      <count-to
-                        :startVal="0"
-                        :endVal="item.num"
-                        :duration="1000"
-                        :autoplay="true"
-                        :separator="','"
-                        class="count-style"
-                        :style="{ color: item.color }"
-                      />
+                      <count-to :startVal="0" :endVal="item.num" :duration="1000" :autoplay="true" :separator="','"
+                        class="count-style" :style="{ color: item.color }" />
                     </div>
                     <span>{{ item.title }}</span>
                   </div>
@@ -43,13 +27,7 @@
                 </div>
               </div>
               <div class="task">
-                <Title
-                  text="项目任务"
-                  showSelect
-                  showPhase
-                  :phaseId="taskPhaseId"
-                  @changePhase="changeTaskPhase"
-                />
+                <Title text="项目任务" showSelect showPhase :phaseId="taskPhaseId" @changePhase="changeTaskPhase" />
                 <div class="taskPie">
                   <complete-pie :chartData="productInfo?.taskNumsList" />
                   <product-line :chartData="productInfo?.project5List" />
@@ -58,13 +36,8 @@
             </el-col>
             <el-col :span="12">
               <div class="board">
-                <Title
-                  text="项目交付看板"
-                  showSelect
-                  showPhase
-                  :phaseId="interactionPhaseId"
-                  @changePhase="changeInteractionPhase"
-                />
+                <Title text="项目交付看板" showSelect showPhase :phaseId="interactionPhaseId"
+                  @changePhase="changeInteractionPhase" />
                 <div class="wrap">
                   <interaction :chartData="deliveryInfo" />
                 </div>
@@ -73,11 +46,7 @@
                 <Title text="二维图纸进展" />
                 <div class="pieWrap">
                   <div class="row1">
-                    <div
-                      class="pieItem"
-                      v-for="(item, index) in pdmPicReportList.slice(0, 3)"
-                      :key="index"
-                    >
+                    <div class="pieItem" v-for="(item, index) in pdmPicReportList.slice(0, 3)" :key="index">
                       <div class="pie">
                         <pie :data="item.value" />
                       </div>
@@ -85,11 +54,7 @@
                     </div>
                   </div>
                   <div class="row2">
-                    <div
-                      class="pieItem"
-                      v-for="(item, index) in pdmPicReportList.slice(3)"
-                      :key="index"
-                    >
+                    <div class="pieItem" v-for="(item, index) in pdmPicReportList.slice(3)" :key="index">
                       <div class="pie">
                         <pie :data="item.value" />
                       </div>
@@ -227,22 +192,23 @@ watch(
       taskPhaseId.value = "-1";
       fetchData();
       fetchPdmPicReport();
-    }
-  },
-  { immediate: true }
-);
-
-watch(
-  () => selectPhaseId.value,
-  () => {
-    if (selectPhaseId.value) {
-      interactionPhaseId.value = selectPhaseId.value;
-      taskPhaseId.value = selectPhaseId.value;
       fetchDeliveryData();
     }
   },
   { immediate: true }
 );
+
+// watch(
+//   () => selectPhaseId.value,
+//   () => {
+//     if (selectPhaseId.value) {
+//       interactionPhaseId.value = selectPhaseId.value;
+//       taskPhaseId.value = selectPhaseId.value;
+//       fetchDeliveryData();
+//     }
+//   },
+//   { immediate: true }
+// );
 </script>
 
 <style lang="scss" scoped>
