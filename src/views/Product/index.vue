@@ -94,7 +94,7 @@ const productInfo = ref({});
 const pdmPicReportList = ref([]);
 const deliveryInfo = ref({});
 
-const interactionPhaseId = ref(null); // 项目交付看板阶段id
+const interactionPhaseId = ref('-1'); // 项目交付看板阶段id
 const taskPhaseId = ref("-1"); // 项目任务阶段id
 
 const list = ref([]);
