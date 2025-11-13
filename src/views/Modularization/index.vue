@@ -41,7 +41,7 @@
             </el-col>
             <el-col :span="9" style="height: 40%">
               <div class="moduleRate">
-                <Title text="项目模块率" />
+                <Title text="项目模块化率" />
                 <div class="wrap">
                   <module-rate :chartData="moduleInfo?.moduleRateList" />
                 </div>

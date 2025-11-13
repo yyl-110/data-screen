@@ -16,7 +16,7 @@ const props = defineProps({
 });
 const initChart = () => {
   const xData = props.chartData.map(item => item.nameCN)
-  const seriesData = [{ name: '模块率', value: props.chartData.map(item => item.para6 || 0) }]
+  const seriesData = [{ name: '模块化率', value: props.chartData.map(item => item.para6 || 0) }]
   const colorList = [
     ["#49A9EE", "#49A9EE"],
     ["rgba(165,214,63,.25)", "#A6D63E"],

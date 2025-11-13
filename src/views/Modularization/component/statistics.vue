@@ -3,15 +3,29 @@
     <div class="centerHeader">
       <div class="title">模块总数</div>
       <div>
-        <count-to :startVal="0" :endVal="moduleTotal" :duration="1000" :autoplay="true" :separator="','"
-          class="count-style" />
+        <count-to
+          :startVal="0"
+          :endVal="moduleTotal"
+          :duration="1000"
+          :autoplay="true"
+          :separator="','"
+          class="count-style"
+        />
       </div>
     </div>
     <div class="main">
       <div class="center">
-        <img src="../../../assets/module/centerBg.png" alt="" class="rotating-3d">
-        <div class="pointItem" v-for="(item, index) in moduleNumList" :key="index">
-          <img src="../../../assets/module/point.png" alt="" class="rotating">
+        <img
+          src="../../../assets/module/centerBg.png"
+          alt=""
+          class="rotating-3d"
+        />
+        <div
+          class="pointItem"
+          v-for="(item, index) in moduleNumList"
+          :key="index"
+        >
+          <img src="../../../assets/module/point.png" alt="" class="rotating" />
           <div class="rotate"></div>
           <div>{{ item.moduleName }}</div>
           <span>{{ item.moduleNum }}%</span>
@@ -20,21 +34,41 @@
       <div class="bottom">
         <div class="list">
           <div class="row1">
-            <div class="item" v-for="(item, index) in computedResNumList.slice(0, 2)" :key="index">
+            <div
+              class="item"
+              v-for="(item, index) in computedResNumList.slice(0, 2)"
+              :key="index"
+            >
               <span class="name">{{ item.majorName }}</span>
               <div>
-                <count-to :startVal="0" :endVal="item.moduleNum" :duration="1000" :autoplay="true" :separator="','"
-                  class="count-style" />
+                <count-to
+                  :startVal="0"
+                  :endVal="item.moduleNum"
+                  :duration="1000"
+                  :autoplay="true"
+                  :separator="','"
+                  class="count-style"
+                />
               </div>
               <span class="rate">{{ item.rate }}</span>
             </div>
           </div>
           <div class="row2">
-            <div class="item" v-for="(item, index) in computedResNumList.slice(2)" :key="index">
+            <div
+              class="item"
+              v-for="(item, index) in computedResNumList.slice(2)"
+              :key="index"
+            >
               <span class="name">{{ item.majorName }}</span>
               <div>
-                <count-to :startVal="0" :endVal="item.moduleNum" :duration="1000" :autoplay="true" :separator="','"
-                  class="count-style" />
+                <count-to
+                  :startVal="0"
+                  :endVal="item.moduleNum"
+                  :duration="1000"
+                  :autoplay="true"
+                  :separator="','"
+                  class="count-style"
+                />
               </div>
               <span class="rate">{{ item.rate }}</span>
             </div>
@@ -47,54 +81,56 @@
 
 <script setup>
 const pointList = [
-  { label: '标准模块', rate: '34.12%' },
-  { label: '预组装模块', rate: '38.12%' },
-  { label: '基型模块', rate: '34.12%' },
-]
-const list = [
-  { label: '总体', num: 396, rate: '28%' },
-  { label: '辅助系统', num: 396, rate: '28%' },
-  { label: '车体', num: 396, rate: '28%' },
-  { label: '电传动', num: 396, rate: '28%' },
-  { label: '转向架', num: 396, rate: '28%' },
-  { label: '制动系统', num: 396, rate: '28%' },
-]
+  { label: "标准模块", rate: "34.12%" },
+  { label: "预组装模块", rate: "38.12%" },
+  { label: "基型模块", rate: "34.12%" },
+];
+const defaultOrder = ["车体", "柴油机", "转向架", "制动系统", "电传动", "辅助系统"];
 
 const computedResNumList = computed(() => {
   if (!props.resNumList || props.resNumList.length === 0) {
     return [];
   }
-
   // 计算总数
-  const total = props.resNumList.reduce((sum, item) => sum + (item.moduleNum || 0), 0);
-
+  const total = props.resNumList.reduce(
+    (sum, item) => sum + (item.moduleNum || 0),
+    0
+  );
   // 返回带计算比率的新数组
-  return props.resNumList.map(item => {
-    const rate = total > 0 ? ((item.moduleNum / total) * 100).toFixed(0) + '%' : '0%';
+  const listWithRate = props.resNumList.map((item) => {
+    const rate =
+      total > 0 ? ((item.moduleNum / total) * 100).toFixed(0) + "%" : "0%";
     return {
       ...item,
-      rate: rate
+      rate: rate,
     };
+  });
+  // 按照指定顺序排序
+  return listWithRate.sort((a, b) => {
+    const indexA = defaultOrder.indexOf(a.majorName);
+    const indexB = defaultOrder.indexOf(b.majorName);
+
+    // 如果找不到对应名称，则排在最后
+    return (
+      (indexA === -1 ? Infinity : indexA) - (indexB === -1 ? Infinity : indexB)
+    );
   });
 });
 
 const props = defineProps({
   moduleTotal: {
     type: Number,
-    default: 0
+    default: 0,
   },
   moduleNumList: {
     type: Array,
-    default: () => []
+    default: () => [],
   },
   resNumList: {
     type: Array,
-    default: () => []
-  }
-})
-
-
-
+    default: () => [],
+  },
+});
 </script>
 
 <style lang="scss" scoped>
@@ -109,7 +145,7 @@ const props = defineProps({
   .centerHeader {
     width: 429px;
     height: 132px;
-    background-image: url('../../assets/module/totalBg.png');
+    background-image: url("../../assets/module/totalBg.png");
     background-repeat: no-repeat;
     background-size: 100% 100%;
     margin-top: 12px;
@@ -120,11 +156,11 @@ const props = defineProps({
 
     .count-style {
       font-size: 80px;
-      background: linear-gradient(to bottom, #fff, #006FD0);
+      background: linear-gradient(to bottom, #fff, #006fd0);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      font-family: 'MyFont', sans-serif;
+      font-family: "MyFont", sans-serif;
       display: inline-block;
       margin-top: -18px;
     }
@@ -140,7 +176,7 @@ const props = defineProps({
     flex: 1;
     width: 100%;
     height: 0;
-    background-image: url('../../../assets/module/bg1.png');
+    background-image: url("../../../assets/module/bg1.png");
     background-repeat: no-repeat;
     background-size: 790px 295px;
     background-position: center bottom;
@@ -178,7 +214,6 @@ const props = defineProps({
       //   }
       // }
 
-
       .pointItem {
         display: flex;
         flex-direction: column;
@@ -188,10 +223,9 @@ const props = defineProps({
         .rotate {
           width: 35px;
           height: 20px;
-          border: 2px #66FFFF dashed;
+          border: 2px #66ffff dashed;
           border-radius: 50%;
           animation: ripple 2s infinite;
-
         }
 
         @keyframes ripple {
@@ -236,7 +270,7 @@ const props = defineProps({
           transform: translateX(-50%);
         }
 
-        >img {
+        > img {
           width: 43px;
           height: 43px;
           animation: float 2s ease-in-out infinite;
@@ -252,15 +286,14 @@ const props = defineProps({
         }
 
         span {
-          color: #FFC300;
+          color: #ffc300;
           font-size: 20px;
           font-weight: bold;
           line-height: 28px;
         }
-
       }
 
-      >img {
+      > img {
         width: 435px;
         height: 100%;
       }
@@ -274,7 +307,7 @@ const props = defineProps({
       .item {
         width: 145px;
         height: 106px;
-        background-image: url('../../../assets/module/countBg.png');
+        background-image: url("../../../assets/module/countBg.png");
         background-size: 100% 100%;
         background-repeat: no-repeat;
         display: flex;
@@ -290,7 +323,7 @@ const props = defineProps({
         .count-style {
           font-size: 20px;
           font-weight: bold;
-          background: linear-gradient(to bottom, #fff, #006FD0);
+          background: linear-gradient(to bottom, #fff, #006fd0);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
@@ -298,7 +331,7 @@ const props = defineProps({
 
         .rate {
           font-size: 18px;
-          color: #77FF00;
+          color: #77ff00;
           font-weight: bold;
         }
       }
