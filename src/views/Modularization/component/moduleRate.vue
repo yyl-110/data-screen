@@ -85,6 +85,7 @@ const initChart = () => {
       type: "category",
     },
     yAxis: {
+      max: 100,
       axisLine: {
         show: false, //隐藏X轴轴线
         lineStyle: {

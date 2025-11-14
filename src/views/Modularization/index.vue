@@ -12,11 +12,11 @@
           <el-row style="height: 100%; padding: 0 24px 42px">
             <el-col :span="7" style="height: 60%">
               <div class="evaluate">
-                <Title text="模块评价体系" showBtn>
-                  <div class="evaluateBtn">
+                <Title text="模块评价体系">
+                  <!-- <div class="evaluateBtn">
                     查看详情
                     <img src="@/assets/common/arrow.png" alt="">
-                  </div>
+                  </div> -->
                 </Title>
                 <div class="wrap">
                   <evaluate :chartData="moduleInfo?.moduleEvaluation" />
@@ -32,7 +32,7 @@
             <el-col :span="7">
               <div class="top">
                 <Title text="模块使用频次排名 TOP50" showBtn>
-                  <div>查看清单</div>
+                  <div @click="lookList">查看清单</div>
                 </Title>
                 <div class="wrap">
                   <top-bar :chartData="moduleInfo?.useFrequencyList" />
@@ -90,6 +90,10 @@ const fetchData = async () => {
 const back = () => {
   window.history.back();
 };
+
+const lookList = () => {
+  window.location.href = 'http://39.106.130.85:8082/bl-server/dashboard/exportUsageFrequency'
+}
 
 onMounted(() => {
   fetchData()

@@ -92,10 +92,13 @@ const initChart = () => {
     ],
   };
 };
-
-onMounted(() => {
-  initChart();
-});
+watch(
+  () => props.data,
+  () => {
+    initChart();
+  },
+  { immediate: true, deep: true }
+);
 </script>
 
 <style lang="scss" scoped></style>
