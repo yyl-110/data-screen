@@ -12,7 +12,7 @@
           <el-row style="height: 100%; padding: 0 24px 42px">
             <el-col :span="7" style="height: 60%">
               <div class="evaluate">
-                <Title text="模块评价体系">
+                <Title text="模块评价体系" showSelect :optionsProject="projectList">
                   <!-- <div class="evaluateBtn">
                     查看详情
                     <img src="@/assets/common/arrow.png" alt="">
@@ -72,12 +72,16 @@ import statistics from "./component/statistics.vue";
 import moduleBoard from "./component/moduleBoard.vue";
 import topBar from "./component/topBar.vue";
 import { getReportModuleList } from "@/api";
+import { useIndexStore } from "@/stores";
+import { storeToRefs } from "pinia";
+const indexStore = useIndexStore();
+const { projectList, selectProjectId } = storeToRefs(indexStore);
 
 const moduleInfo = ref(null)
 
 const fetchData = async () => {
   try {
-    const res = await getReportModuleList({})
+    const res = await getReportModuleList({ projectId: selectProjectId.value })
     if (res.code === '0') {
       moduleInfo.value = res.data
       console.log('moduleInfo.value:', moduleInfo.value)
@@ -95,9 +99,19 @@ const lookList = () => {
   window.location.href = 'http://39.106.130.85:8082/bl-server/dashboard/exportUsageFrequency'
 }
 
-onMounted(() => {
-  fetchData()
-})
+// onMounted(() => {
+//   fetchData()
+// })
+
+watch(
+  () => selectProjectId.value,
+  () => {
+    if (selectProjectId.value) {
+      fetchData();
+    }
+  },
+  { immediate: true }
+);
 </script>
 
 <style lang="scss" scoped>

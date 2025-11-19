@@ -4,20 +4,22 @@ import request from "./request";
  * 报表--基础资源看板
  * @return {*}
  */
-export function getReportKnowledgeList() {
+export function getReportKnowledgeList(data: { type: string | number }) {
   return request({
     url: "/base-server/reportinfo/getReportKnowledgeList",
     method: "post",
+    data,
   });
 }
 /**
  * 模块化看板
  * @return {*}
  */
-export function getReportModuleList() {
+export function getReportModuleList(data: { projectId: string | number }) {
   return request({
     url: "/base-server/reportinfo/getReportModuleList",
     method: "post",
+    data,
   });
 }
 /**

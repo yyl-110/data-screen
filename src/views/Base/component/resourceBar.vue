@@ -120,7 +120,7 @@ const initChart = () => {
     ],
     series: [
       {
-        name: "项目数",
+        name: "资源数",
         type: "bar",
         barWidth: 32,
         // showBackground: true,

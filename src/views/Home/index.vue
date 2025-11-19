@@ -119,7 +119,7 @@ const goTo = (item) => {
       >div {
         width: 50%;
         text-align: center;
-        animation: float 2s ease-in-out infinite;
+        // animation: float 2s ease-in-out infinite;
         cursor: pointer;
 
         &:nth-of-type(1) {

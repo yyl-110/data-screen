@@ -12,7 +12,7 @@
           <el-row style="height: 100%; padding: 30px 24px 42px" :gutter="24">
             <el-col :span="8" style="height: 50%">
               <div class="knowledge">
-                <Title text="知识看板" />
+                <Title text="知识看板" showSelect showTime :timeOptions="timeOptions2" @changeTime="changeKnowledgeTime" />
                 <div class="wrap">
                   <knowledge-bar :chartData="systemInfo?.knowledgeList" />
                 </div>
@@ -79,13 +79,29 @@ const timeOptions = [
   },
 ];
 
+const timeOptions2 = [
+  {
+    value: '1',
+    label: "近一周",
+  },
+  {
+    value: '2',
+    label: "近一月",
+  },
+  {
+    value: '3',
+    label: "近一年",
+  },
+];
+
 const systemInfo = ref({});
 const visitReportInfo = ref([])
 const timeType = ref('1')
+const timeType2 = ref('1')
 
-const fetchData = async () => {
+const fetchData = async (type) => {
   try {
-    const res = await getReportKnowledgeList({})
+    const res = await getReportKnowledgeList({ type })
     if (res.code === '0') {
       systemInfo.value = res.data
     }
@@ -116,9 +132,14 @@ const changeTime = (val) => {
   fetchModelVisitReport(val)
 }
 
+const changeKnowledgeTime = (val) => {
+  timeType2.value = val
+  fetchData(val)
+}
+
 onMounted(() => {
-  fetchData()
-  fetchModelVisitReport(1) // 默认查询一周
+  fetchData('1') // 默认查询一周
+  fetchModelVisitReport('1') // 默认查询一周
 })
 
 </script>
