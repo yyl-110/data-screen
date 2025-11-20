@@ -161,14 +161,14 @@ const initChart = () => {
         smooth: false, //是否平滑曲线显示
         showSymbol: true,
         itemStyle: {
-          color: '#63d2e7',
-          borderColor: '#63d2e7',
+          color: '#FACC14',
+          borderColor: '#FACC14',
           borderWidth: 1,
         },
         lineStyle: {
           normal: {
             width: 3,
-            color: '#63d2e7',
+            color: '#FACC14',
           },
         },
         data: personTime,

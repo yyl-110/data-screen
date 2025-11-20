@@ -63,7 +63,8 @@ const initChart = () => {
     label: {
       show: true,
       position: "inside",
-      color: "#525252",
+      color: "#000",
+      fontSize: 18,
       formatter: function (params) {
         return params.value;
       },

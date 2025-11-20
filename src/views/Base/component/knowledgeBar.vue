@@ -44,7 +44,7 @@ const initChart = () => {
       barGap: "-100%",
       barWidth: 14,
       xAxisIndex: 0,
-      yAxisIndex: 1,
+      // yAxisIndex: 1,
       z: 0,
       data: maxBgArr,
       tooltip: {
@@ -57,10 +57,10 @@ const initChart = () => {
         },
       },
       label: {
+        show: false,
         color: "#fff",
         position: 'right',
         offset: [-100, 28],// 向右和向下偏移10像素
-        show: true,
         formatter: (params) => {
           return `${params.name}${type[1][params.dataIndex]}`;
         },
@@ -136,7 +136,7 @@ const initChart = () => {
         show: false,
       },
       data: type[0],
-      yAxisIndex: 1,
+      // yAxisIndex: 1,
       z: 2,
     }
   ];
