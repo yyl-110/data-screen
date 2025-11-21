@@ -168,7 +168,7 @@ const initChart = () => {
 
 watch(() => props.chartData, () => {
   initChart();
-})
+}, { deep: true })
 
 </script>
 

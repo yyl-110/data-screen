@@ -31,7 +31,7 @@ const initTable = () => {
   monthList.value = Object.keys(props.chartData[0]).filter(item => item !== 'systemTemp').map(item => `${dayjs(item).get('month')}月`)
 
   const yearMonthList = Object.keys(props.chartData[0]).filter(item => item !== 'systemTemp');
- 
+
   dataList.value = props.chartData.map(item => {
     // 根据 monthList 的顺序提取对应的数据值
     const values = yearMonthList.map(month => item[month] || 0);
@@ -165,7 +165,7 @@ const initChart = () => {
 watch(() => props.chartData, () => {
   initTable();
   initChart();
-})
+}, { deep: true })
 
 </script>
 

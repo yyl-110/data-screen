@@ -9,7 +9,65 @@ import * as echarts from "echarts";
 const props = defineProps({
   chartData: {
     type: Object,
-    default: () => { }
+    default: () => {
+      return {
+        data: [
+          {
+            name: "研发",
+            value: [
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            name: "制造",
+            value: [
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            name: "运维",
+            value: [
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        ],
+        indicator: [
+          {
+            max: 0,
+            name: "独立性"
+          },
+          {
+            max: 0,
+            name: "通用性"
+          },
+          {
+            max: 0,
+            name: "构成最少化"
+          },
+          {
+            max: 0,
+            name: "接口简统化"
+          },
+          {
+            max: 0,
+            name: "柔性化"
+          }
+        ],
+        title: ["研发", "制造", "运维"]
+      }
+    }
   }
 })
 
@@ -97,9 +155,8 @@ const initChart = () => {
 
 
 watch(() => props.chartData, () => {
-  console.log('props.chartData', props.chartData)
   initChart();
-})
+}, { deep: true })
 </script>
 
 <style lang="scss" scoped></style>
