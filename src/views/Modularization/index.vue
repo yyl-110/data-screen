@@ -49,7 +49,8 @@
             </el-col>
             <el-col :span="15" style="height: 40%">
               <div class="moduleBoard">
-                <Title text="模块访问看板" />
+                <Title text="模块访问看板" showSelect showTime :timeOptions="timeOptions" @changeTime="changeTime"
+                  :defaultTime="timeType" />
                 <div class="wrap">
                   <moduleBoard :chartData="moduleInfo?.moduleUsedList" />
                 </div>
@@ -78,13 +79,29 @@ const indexStore = useIndexStore();
 const { projectList, selectProjectId } = storeToRefs(indexStore);
 
 const moduleInfo = ref(null)
+const timeType = ref(new Date().getFullYear().toString())
 
-const fetchData = async () => {
+const timeOptions = computed(() => {
+  const currentYear = new Date().getFullYear();
+  return Array.from({ length: 5 }, (_, i) => {
+    const year = currentYear - i;
+    return {
+      value: year.toString(),
+      label: `${year}年`
+    };
+  });
+});
+
+const changeTime = (val) => {
+  timeType.value = val
+  fetchData(val)
+}
+
+const fetchData = async (type) => {
   try {
-    const res = await getReportModuleList({ projectId: selectProjectId.value })
+    const res = await getReportModuleList({ projectId: selectProjectId.value, year: type })
     if (res.code === '0') {
       moduleInfo.value = res.data
-      console.log('moduleInfo.value:', moduleInfo.value)
     }
   } catch (error) {
     console.log('error:', error)
@@ -107,7 +124,7 @@ watch(
   () => selectProjectId.value,
   () => {
     if (selectProjectId.value) {
-      fetchData();
+      fetchData(timeType.value);
     }
   },
   { immediate: true }

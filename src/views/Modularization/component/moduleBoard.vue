@@ -28,7 +28,7 @@ const dataList = ref([])
 const monthList = ref([])
 
 const initTable = () => {
-  monthList.value = Object.keys(props.chartData[0]).filter(item => item !== 'systemTemp').map(item => `${dayjs(item).get('month')}月`)
+  monthList.value = Object.keys(props.chartData[0]).filter(item => item !== 'systemTemp').map(item => `${dayjs(item).get('month') + 1}月`)
 
   const yearMonthList = Object.keys(props.chartData[0]).filter(item => item !== 'systemTemp');
 

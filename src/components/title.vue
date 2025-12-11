@@ -3,54 +3,18 @@
     <span>{{ text }}</span>
     <div class="selectWrap" v-if="showSelect">
       <!-- 项目筛选 -->
-      <el-select
-        @change="changeProject"
-        v-model="value1"
-        class="select"
-        placeholder="选择项目"
-        size="large"
-        style="width: 197px"
-        v-if="optionsProject && optionsProject.length"
-      >
-        <el-option
-          v-for="item in optionsProject"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-        />
+      <el-select @change="changeProject" v-model="value1" class="select" placeholder="选择项目" size="large"
+        style="width: 197px" v-if="optionsProject && optionsProject.length">
+        <el-option v-for="item in optionsProject" :key="item.value" :label="item.label" :value="item.value" />
       </el-select>
       <!-- 阶段筛选 -->
-      <el-select
-        @change="changePhase"
-        v-model="value2"
-        class="select"
-        placeholder="选择阶段"
-        size="large"
-        style="width: 197px"
-        v-if="showPhase"
-      >
-        <el-option
-          v-for="item in phaseList"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-        />
+      <el-select @change="changePhase" v-model="value2" class="select" placeholder="选择阶段" size="large"
+        style="width: 197px" v-if="showPhase">
+        <el-option v-for="item in phaseList" :key="item.value" :label="item.label" :value="item.value" />
       </el-select>
-      <el-select
-        @change="changeTime"
-        v-model="value3"
-        class="select"
-        placeholder="选择时间"
-        size="large"
-        style="width: 197px"
-        v-if="showTime"
-      >
-        <el-option
-          v-for="item in timeOptions"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-        />
+      <el-select @change="changeTime" v-model="value3" class="select" placeholder="选择时间" size="large"
+        style="width: 197px" v-if="showTime">
+        <el-option v-for="item in timeOptions" :key="item.value" :label="item.label" :value="item.value" />
       </el-select>
     </div>
     <div class="btnWrap" v-if="showBtn">
@@ -114,11 +78,15 @@ const props = defineProps({
     type: Array,
     default: () => [],
   },
+  defaultTime: {
+    type: String,
+    default: "",
+  },
 });
 
 const value1 = ref(selectProjectId.value); // 项目
 const value2 = ref(props.phaseId || "-1"); // 阶段
-const value3 = ref("1"); // 时间
+const value3 = ref(props.defaultTime || "1"); // 时间
 
 // 修改项目
 const changeProject = (val) => {

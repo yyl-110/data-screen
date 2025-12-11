@@ -36,9 +36,9 @@ const router = useRouter();
 
 const list = [
   { url: btn1, id: 1, path: "/product" },
-  { url: btn3, id: 3, path: "/system" },
-  { url: btn2, id: 2, path: "/modularization" },
   { url: btn4, id: 4, path: "/base" },
+  { url: btn2, id: 2, path: "/modularization" },
+  { url: btn3, id: 3, path: "/system" },
 ];
 
 const goTo = (item) => {

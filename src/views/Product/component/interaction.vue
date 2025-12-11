@@ -17,7 +17,7 @@ const chartOption = ref({});
 const props = defineProps({
   chartData: {
     type: Object,
-    default: () => {},
+    default: () => { },
   },
 });
 
@@ -41,7 +41,7 @@ const initChart = () => {
   const colorList = [
     ["#15728C", "#92D1DE"],
     ["#6A5FDC", "#6A5FDC"],
-    ["#15728C", "#FF8D1A"],
+    ["#FF8D1A", "#FF8D1A"],
   ];
 
   chartOption.value = {
